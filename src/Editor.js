@@ -1,46 +1,47 @@
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { EditorHeight, viewportWidth } from "../constants";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useEditorRef, useGlobalContext } from "../GlobalContext";
+import {LinearGradient} from 'expo-linear-gradient';
+import React from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {EditorHeight, viewportWidth} from '../constants';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useEditorRef, useGlobalContext} from '../GlobalContext';
+
+import Radius from './Radius';
+import Padding from './Padding';
+import Background from './Background';
+import Shadow from './Shadow';
+import AspectRatio from './AspectRatio';
+import Share from './Share/Share';
 
 const options = [
   {
-    id: "radius",
-    title: "Radius",
-    icon: "rounded-corner",
+    id: 'radius',
+    title: 'Radius',
+    icon: 'rounded-corner',
   },
   {
-    id: "shadow",
-    title: "Shadow",
-    icon: "box-shadow",
+    id: 'shadow',
+    title: 'Shadow',
+    icon: 'box-shadow',
   },
   {
-    id: "padding",
-    title: "Padding",
-    icon: "border-all-variant",
+    id: 'padding',
+    title: 'Padding',
+    icon: 'border-all-variant',
   },
   {
-    id: "background",
-    title: "Background",
-    icon: "image-multiple",
+    id: 'background',
+    title: 'Background',
+    icon: 'image-multiple',
   },
   {
-    id: "ratio",
-    title: "Aspect Ratio",
-    icon: "aspect-ratio",
+    id: 'ratio',
+    title: 'Aspect Ratio',
+    icon: 'aspect-ratio',
   },
   {
-    id: "share",
-    title: "Share",
-    icon: "share-variant-outline",
+    id: 'share',
+    title: 'Share',
+    icon: 'share-variant-outline',
   },
 ];
 
@@ -62,12 +63,11 @@ const Options = () => {
       style={{
         height: 150,
         // paddingHorizontal: 20,
-        justifyContent: "flex-end",
-        justifyContent: "center",
+        justifyContent: 'flex-end',
+        justifyContent: 'center',
         // alignItems: "center",
         // backgroundColor: "red",
-      }}
-    >
+      }}>
       <FlatList
         ref={editorRef}
         style={{
@@ -81,7 +81,7 @@ const Options = () => {
         snapToAlignment="start"
         snapToInterval={viewportWidth}
         data={options}
-        renderItem={({ item }) => {
+        renderItem={({item}) => {
           const Editor = Editors[item.id];
           return <Editor />;
         }}
@@ -90,42 +90,7 @@ const Options = () => {
   );
 };
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import Radius from "./Radius";
-import Padding from "./Padding";
-import Background from "./Background";
-import Shadow from "./Shadow";
-import AspectRatio from "./AspectRatio";
-import Share from "./Share/Share";
-
-const Tab = createBottomTabNavigator();
-
-function MyTabs() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          title: "",
-          headerShown: false,
-        }}
-        tabBar={TabComponent}
-        sceneContainerStyle={{
-          maxHeight: 200,
-          backgroundColor: "red",
-          position: "absolute",
-          bottom: 0,
-          width: viewportWidth,
-        }}
-      >
-        <Tab.Screen name="Home" component={Options} options={{}} />
-        <Tab.Screen name="Settings" component={Options} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
-
-const TabBar = (props) => {
+const TabBar = props => {
   const [state, dispatch] = useGlobalContext();
   const editorRef = useEditorRef();
 
@@ -134,45 +99,42 @@ const TabBar = (props) => {
       style={{
         borderTopWidth: 2,
         // paddingTop: 10,
-        borderTopColor: "rgba(255, 255, 255, 0.05)",
+        borderTopColor: 'rgba(255, 255, 255, 0.05)',
         // backgroundColor: "green",
         height: 50,
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        alignItems: "center",
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
         width: viewportWidth,
-      }}
-    >
+      }}>
       {options.map((item, i) => {
         return (
           <TouchableOpacity
             key={item.id}
             style={{
-              alignItems: "center",
+              alignItems: 'center',
               opacity: state.activeTab === item.id ? 1 : 0.3,
             }}
             onPress={() => {
               console.log(
-                "onPress",
+                'onPress',
                 i,
-                editorRef.current.scrollToIndex({ index: i, animated: false })
+                editorRef.current.scrollToIndex({index: i, animated: false}),
               );
               dispatch({
-                type: "TAB",
+                type: 'TAB',
                 payload: {
                   tab: item.id,
                   title: item.title,
                 },
               });
-            }}
-          >
+            }}>
             <MaterialCommunityIcons name={item.icon} color="white" size={25} />
             <Text
               style={{
-                color: "white",
+                color: 'white',
                 fontSize: 12,
-              }}
-            >
+              }}>
               {item.title}
             </Text>
           </TouchableOpacity>
@@ -200,10 +162,9 @@ const Editor = () => {
       {/* <MyTabs /> */}
       <View
         style={{
-          position: "absolute",
+          position: 'absolute',
           bottom: 0,
-        }}
-      >
+        }}>
         <Options />
         <TabBar />
       </View>
