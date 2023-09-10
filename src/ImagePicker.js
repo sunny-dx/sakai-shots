@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   Image,
@@ -6,48 +6,56 @@ import {
   Platform,
   TouchableOpacity,
   Text,
-} from "react-native";
-import * as MediaPicker from "expo-image-picker";
-import { useGlobalContext } from "../GlobalContext";
-import { viewportWidth } from "../constants";
+} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {useGlobalContext} from '../GlobalContext';
 
-const Picker = ({ onPress }) => {
+const MediaPicker = () =>
+  new Promise(res => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 1,
+      },
+      res,
+    );
+  });
+
+const Picker = ({onPress}) => {
   const [state, dispatch] = useGlobalContext();
 
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
         padding: 20,
         borderRadius: 20,
         // margin: 40,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Text
         style={{
           fontSize: 15,
-        }}
-      >
+        }}>
         Click here to add your image
       </Text>
     </TouchableOpacity>
   );
 };
 
-const getSize = (url) =>
-  new Promise((resolve) => {
+const getSize = url =>
+  new Promise(resolve => {
     Image.getSize(url, (width, height) =>
       resolve({
         width,
         height,
-      })
+      }),
     );
   });
 
-export default function ImagePicker({ scale }) {
+export default function ImagePicker({scale}) {
   const [image, setImage] = useState(null);
   const [imageStyle, setStyle] = useState({
     aspectRatio: 1,
@@ -55,27 +63,15 @@ export default function ImagePicker({ scale }) {
   const [state, dispatch] = useGlobalContext();
 
   const pickImage = async () => {
-    await MediaPicker.requestMediaLibraryPermissionsAsync();
-    let result = await MediaPicker.launchImageLibraryAsync({
-      mediaTypes: MediaPicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: false,
-      //   allowsEditing: true,
-      //   aspect: [4, 3],
-      //   quality: 1,
-    });
-    if (!result.canceled) {
+    let result = await MediaPicker();
+    if (!result.didCancel) {
       let {
         uri: image,
         width: imageWidth,
         height: imageHeight,
       } = result.assets[0];
-      // if (!imageHeight || !imageWidth) {
-      //   const { width, height } = await getSize(result.assets[0].uri);
-      //   imageWidth = width;
-      //   imageHeight = height;
-      // }
       dispatch({
-        type: "IMAGE",
+        type: 'IMAGE',
         payload: {
           image,
           imageRatio: imageWidth / imageHeight,
@@ -92,7 +88,7 @@ export default function ImagePicker({ scale }) {
         {
           elevation: state.shadow * 40,
           borderRadius: state.radius * 50 * scale,
-          shadowColor: "black",
+          shadowColor: 'black',
           shadowOffset: {
             width: 0,
             height: 0,
@@ -106,25 +102,24 @@ export default function ImagePicker({ scale }) {
           web: (() => {
             const style = {};
             if (state.imageWidth > state.imageHeight) {
-              style.width = "-webkit-fill-available";
+              style.width = '-webkit-fill-available';
             } else if (state.imageHeight && state.imageWidth) {
-              style.height = "-webkit-fill-available";
+              style.height = '-webkit-fill-available';
             }
             return [style];
           })(),
           android: [],
         }),
       ]}
-      onPress={pickImage}
-    >
+      onPress={pickImage}>
       {state.image ? (
         <Image
           source={{
             uri: state.image,
           }}
           style={{
-            width: "100%",
-            height: "100%",
+            width: '100%',
+            height: '100%',
             aspectRatio: state.imageRatio,
             borderRadius: state.radius * 50 * scale,
             // margin: -10

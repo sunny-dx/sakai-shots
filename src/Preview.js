@@ -9,9 +9,7 @@ import {
 import { viewportHeight, viewportWidth } from "../constants";
 import { Canvas, Circle, Group } from "@shopify/react-native-skia";
 import { useGlobalContext, usePreviewRef } from "../GlobalContext";
-import { LinearGradient } from "expo-linear-gradient";
 import ImagePicker from "./ImagePicker";
-import * as MediaPicker from "expo-image-picker";
 
 const HelloWorld = () => {
   const size = 256;
