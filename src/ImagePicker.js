@@ -68,6 +68,15 @@ export default function ImagePicker({scale}) {
     }
   };
 
+  const imagefit =
+    state.imageRatio <= 1 && state.imageRatio <= state.aspectRatio
+      ? {
+          height: '100%',
+        }
+      : {
+          width: '100%',
+        };
+
   return (
     <TouchableOpacity
       style={[
@@ -104,13 +113,7 @@ export default function ImagePicker({scale}) {
           style={{
             aspectRatio: state.imageRatio,
             borderRadius: state.radius * 50 * scale,
-            ...(state.imageRatio < 1
-              ? {
-                  height: '100%',
-                }
-              : {
-                  width: '100%',
-                }),
+            ...imagefit,
           }}
           resizeMode="contain"
         />
