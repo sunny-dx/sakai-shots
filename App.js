@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Editor from './src/Editor';
+import Editor from './src/Editor/Editor';
 import Preview from './src/Preview';
 import ContextProvider from './GlobalContext';
 

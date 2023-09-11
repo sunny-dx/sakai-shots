@@ -15,8 +15,6 @@ const MediaPicker = () =>
   });
 
 const Picker = ({onPress}) => {
-  const [state, dispatch] = useGlobalContext();
-
   return (
     <TouchableOpacity
       style={{
@@ -49,12 +47,7 @@ const getSize = url =>
   });
 
 export default function ImagePicker({scale}) {
-  const [image, setImage] = useState(null);
-  const [imageStyle, setStyle] = useState({
-    aspectRatio: 1,
-  });
   const [state, dispatch] = useGlobalContext();
-
   const pickImage = async () => {
     let result = await MediaPicker();
     if (!result.didCancel) {
@@ -88,8 +81,6 @@ export default function ImagePicker({scale}) {
           },
           shadowOpacity: 0.7,
           shadowRadius: state.shadow * 40,
-          // width: "100%",
-          // backgroundColor: "red",
         },
         ...Platform.select({
           web: (() => {

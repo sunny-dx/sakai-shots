@@ -1,29 +1,11 @@
-import React from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { viewportWidth } from "../constants";
-import { useGlobalContext } from "../GlobalContext";
-import Backgrounds from "./Backgrounds";
-
-const data = Array.from({ length: 20 }, (_, index) => ({
-  id: String(index),
-  imageUrl: `https://source.unsplash.com/random/${index}`,
-}));
+import React from 'react';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {viewportWidth} from '../constants';
+import {useGlobalContext} from '../GlobalContext';
+import Backgrounds from './Backgrounds';
 
 const Background = () => {
   const [state, dispatch] = useGlobalContext();
-  const onRadiusChange = (radius) => {
-    dispatch({
-      type: "RADIUS",
-      payload: { radius },
-    });
-  };
-
   const renderItem = (Item, i) => (
     <TouchableOpacity
       key={i}
@@ -36,23 +18,11 @@ const Background = () => {
       }}
       onPress={() =>
         dispatch({
-          type: "BACKGROUND",
-          payload: { background: Item },
+          type: 'BACKGROUND',
+          payload: {background: Item},
         })
-      }
-    >
+      }>
       <Item editor={true} />
-      {/* <Image
-        style={{
-          width: 50,
-          height: 50,
-          marginHorizontal: 5,
-          borderRadius: 10,
-          marginRight: 10,
-        }}
-        source={{ uri:  `https://source.unsplash.com/random/${i}`, }}
-        resizeMode="cover"
-      /> */}
     </TouchableOpacity>
   );
 
@@ -60,10 +30,9 @@ const Background = () => {
     <View
       style={{
         width: viewportWidth,
-        justifyContent: "flex-end",
-        alignItems: "center",
-      }}
-    >
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}>
       <ScrollView
         horizontal
         style={{
@@ -73,13 +42,9 @@ const Background = () => {
         contentContainerStyle={{
           paddingHorizontal: 15,
         }}
-        showsHorizontalScrollIndicator={false}
-      >
+        showsHorizontalScrollIndicator={false}>
         {Backgrounds.map(renderItem)}
       </ScrollView>
-      {/* <Text style={styles.title}>{state.title}</Text> */}
-
-      {/* <Slider value={state.radius} onValueChange={onRadiusChange} /> */}
     </View>
   );
 };
