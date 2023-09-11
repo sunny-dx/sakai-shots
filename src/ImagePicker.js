@@ -1,12 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Button,
-  Image,
-  View,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {Image, Platform, TouchableOpacity, Text} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useGlobalContext} from '../GlobalContext';
 
@@ -27,10 +20,9 @@ const Picker = ({onPress}) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: 'white',
         padding: 20,
         borderRadius: 20,
-        // margin: 40,
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -38,6 +30,7 @@ const Picker = ({onPress}) => {
       <Text
         style={{
           fontSize: 15,
+          color: 'black',
         }}>
         Click here to add your image
       </Text>
@@ -118,11 +111,15 @@ export default function ImagePicker({scale}) {
             uri: state.image,
           }}
           style={{
-            width: '100%',
-            height: '100%',
             aspectRatio: state.imageRatio,
             borderRadius: state.radius * 50 * scale,
-            // margin: -10
+            ...(state.imageRatio < 1
+              ? {
+                  height: '100%',
+                }
+              : {
+                  width: '100%',
+                }),
           }}
           resizeMode="contain"
         />

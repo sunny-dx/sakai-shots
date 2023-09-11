@@ -77,6 +77,7 @@ const Options = () => {
         //   width: viewportWidth,
         // }}
         horizontal
+        showsHorizontalScrollIndicator={false}
         scrollEnabled={false}
         snapToAlignment="start"
         snapToInterval={viewportWidth}
@@ -145,31 +146,15 @@ const TabBar = props => {
 };
 
 const Editor = () => {
-  const [state, dispatch] = useGlobalContext();
   return (
-    <>
-      {/* <LinearGradient
-        // Background Linear Gradient
-        colors={["transparent", "black", "black"]}
-        style={{
-          width: viewportWidth,
-          height: 200,
-          position: "absolute",
-          bottom: 0,
-          zIndex: 2,
-        }}
-      /> */}
-      {/* <MyTabs /> */}
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-        }}>
-        <Options />
-        <TabBar />
-      </View>
-      {/* <TabBar /> */}
-    </>
+    <View
+      style={{
+        position: 'absolute',
+        bottom: 0,
+      }}>
+      <Options />
+      <TabBar />
+    </View>
   );
 };
 
